@@ -1,0 +1,1734 @@
+@charset "utf-8";
+/*! hisho-query v0.1.1 */
+// Sass3 and compass1 Library
+// http://query.hisho.com
+// 
+// Copyright 2014 shoyo kyo
+// Released under the MIT license
+// https://github.com/syouyou/hisho-query/blob/master/LICENSE
+// 
+// Date: 2014-02-16
+
+
+// ------------------------------
+// [name] hq-help v1.0.0
+// [path] /hisho-query/_hq-help.scss
+// [desc] hishoqueryhelpをターミナルに表示
+// [exsample]
+//   hq-help()
+// ------------------------------
+@function hq-help(){
+
+$_help: '
+============================
+HISHO QUERY v0.1.1
+2014.02.10
+============================
+
+----------------------------
+- method help
+
+$hoge: hq("str.help");
+$hoge: hq("num.help");
+$hoge: hq("list.help");
+$hoge: hq("map.help");
+$hoge: hq("is.help");
+$hoge: hq("css.help");
+
+----------------------------
+- method query
+
+$str: hogehoge.fuga;
+
+$hoge: hq("str.upcase->str.quote", $str);  //-> "HOGEHOGE.FUGA"
+
+//argmentは第三引数以降に順に設定する  
+$hoge: hq("str.replace->str.split->list.get", $str, "fuga", "fugo", ".", 2);  //-> fugo
+
+----------------------------
+- method map
+
+method-map   : hq($str,(
+  "str.replace": "abcd" "dcbb",
+  "str.quote": null
+));
+
+----------------------------
+- console
+
+$h: hq-debug($value,$value2);
+
+----------------------------
+';
+	
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-str-help v1.0.0
+// [path] /hisho-query/hq-str/_help.scss
+// [desc] hq("str.xxx")のhelpをターミナルに表示
+// [exsample]
+//   hq-str-help()
+// ------------------------------
+@function hq-str-help(){
+
+$_help: '
+- string method -
+-------------------------------------------------------
+| method        | return | mq| description
+-------------------------------------------------------
+| str.quote     | string | o | quoteを付与する
+| str.length    | number | o | 文字数を返す
+| str.insert    | string | o | 指定位置に文字列を追加
+| str.index     | number | o | 指定文字の位置を返す
+| str.slice     | string | o | 指定した範囲の文字列を取り出す
+| str.upcase    | string | o | 文字列を大文字に変換
+| str.downcase  | string | o | 文字列を小文字に変換
+| str.capitalize| string | o | 先頭の文字を大文字に変換し、他を小文字に変換
+| str.flUpcase  | string | o | 先頭文字のみ大文字に変換
+| str.flDowncase| string | o | 先頭文字のみ小文字に変換
+| str.strip     | string | o | 先頭と末尾の空白文字を除去
+| str.succ      | string | o | 次の文字列を返す
+| str.match     | bool   | o | 文字列検索
+| str.replace   | string | o | 文字列変換
+| str.split     | list   | o | 区切り記号を使用して文字列を分割
+| str.getId     | string | o | ユニークなIDを生成
+| str.reverse   | string | o | 文字列を反転
+| str.toNumber  | number | o | number型に変更
+-------------------------------------------------------
+* mq: "map query"対応可否
+
+$h: hq("str.unquote", $str);
+$h: hq("str.quote", $str);
+$h: hq("str.length", $str);
+$h: hq("str.insert", $str, hoge, 3);
+$h: hq("str.index", $str, fg);
+$h: hq("str.slice", $str, 1, 3);
+$h: hq("str.upcase", $str);
+$h: hq("str.downcase", $str);
+$h: hq("str.capitalize", $str);
+$h: hq("str.flUpcase", $str);
+$h: hq("str.flDowncase", $str);
+$h: hq("str.strip", $str);
+$h: hq("str.succ", $str);
+$h: hq("str.match", $str, "bc");
+$h: hq("str.replace", $str, "bc", "xa");
+$h: hq("str.split", $str, ".");
+$h: hq("str.getId");
+$h: hq("str.reverse", $str);
+$h: hq("str.toNumber", "12.5px");
+-------------------------------------------------------
+';
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-num-help v1.0.0
+// [path] /hisho-query/hq-num/_help.scss
+// [desc] hq("num.xxx")のhelpをターミナルに表示
+// [exsample]
+//   hq-num-help()
+// ------------------------------
+@function hq-num-help(){
+
+$_help: '
+- number method -
+-------------------------------------------------------
+| method        | return | mq| description
+-------------------------------------------------------
+| num.percentage| number | o | パーセンテージに変換
+| num.round     | number | o | 小数点以下四捨五入
+| num.ceil      | number | o | 小数点以下切上げ
+| num.floor     | number | o | 小数点以下切捨て
+| num.abs       | number | o | 絶対値を取得
+| num.min       | number | x | 最小値取得
+| num.max       | number | x | 最大値取得
+| num.unit      | string | o | 値の単位を取得
+| num.unitless  | bool   | o | 単位が指定されているかチェック
+| num.comparable| bool   | o | 2つの値が、合計、比較が可能かチェック
+| num.toString  | string | o | string型に変換
+| num.match     | bool   | o | 文字列検索
+| num.replace   | string | o | 文字列変換
+-------------------------------------------------------
+* mq: "map query"対応可否
+
+$h: hq("num.percentage", (100px / 50px) );
+$h: hq("num.round", 10.4px);
+$h: hq("num.ceil", 10.4px);
+$h: hq("num.floor", 10.4px);
+$h: hq("num.abs", -15px);
+$h: hq("num.min", 10px, 5px, 2px, 15px, 18px);
+$h: hq("num.max", 10px, 5px, 2px, 15px, 18px);
+$h: hq("num.unit", 20em);
+$h: hq("num.unitless", 20em);
+$h: hq("num.comparable", 15em, 15px);
+$h: hq("num.toString", 12px);
+$h: hq("num.match", 100, "/(100|200|300)/");
+$h: hq("num.replace", 100, "/.(00)/", "2\1");
+-------------------------------------------------------
+';
+	
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-list-help v1.0.0
+// [path] /hisho-query/hq-list/_help.scss
+// [desc] hq("is.xxx")のhelpをターミナルに表示
+// [exsample]
+//   hq-list-help()
+// ------------------------------
+@function hq-list-help(){
+
+$_help: '
+- list method -
+-------------------------------------------------------
+| method        | return | mq| description
+-------------------------------------------------------
+| list.get      | other  | o | 配列から値を取得
+| list.set      | list   | o | 配列に値を設定（差し替える）
+| list.length   | number | o | 配列の数を返す
+| list.index    | number | o | 値を検索し位置を返す
+| list.unshift  | list   | o | 値を先頭に追加
+| list.push     | list   | o | 値を最後尾に追加
+| list.shift    | list   | o | 先頭の値を削除
+| list.pop      | list   | o | 最後尾の値を削除
+| list.slice    | list   | o | 指定した範囲の配列を取り出す
+| list.remove   | list   | o | 指定した値を削除
+| list.join     | list   | o | 配列を結合する
+| list.zip      | list   | x | sass zipと同様
+| list.toSpace  | list   | o | listの区切り文字をspaceに変換
+| list.toComma  | list   | o | listの区切り文字をcommaに変換
+| list.separator| string | o | listの区切り文字を返す
+| list.reverse  | list   | o | 配列を反転する
+-------------------------------------------------------
+* mq: "map query"対応可否
+
+$h: hq("list.get", $list, 1);
+$h: hq("list.set", $list, 3, "hoge");
+$h: hq("list.length", $list);
+$h: hq("list.index", $list, "b");
+$h: hq("list.unshift", $list, "x");
+$h: hq("list.push", $list, "x");
+$h: hq("list.shift", $list);
+$h: hq("list.pop", $list);
+$h: hq("list.slice", $list, 2, 3);
+$h: hq("list.remove", $list, c);
+$h: hq("list.join", $list, $list2, "comma");
+$h: hq("list.zip", $list, $list2, $list);
+$h: hq("list.toSpace", $list);
+$h: hq("list.toComma", $list);
+$h: hq("list.separator", $list);
+$h: hq("list.reverse", $list);
+
+-------------------------------------------------------
+';
+	
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-list-pop v1.0.0
+// [path] /hisho-query/hq-map/_pop.scss
+// [desc] listの最後を削除します
+// [return] list
+// [exsample]
+//   hq-list-pop($list);
+// ------------------------------
+@function hq-list-pop($list){
+	$_result: ();
+	@for $i from 1 through length($list) - 1{
+		$_result: append($_result, nth($list, $i));
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-list-prepend v1.0.0
+// [path] /hisho-query/hq-map/_prepend.scss
+// [desc] listの先頭に追加する
+// [return] list
+// [exsample]
+//   hq-list-prepend($list);
+// ------------------------------
+@function hq-list-prepend($list,$value){
+	$_valueList: ();
+	$_valueList: append($_valueList, $value);
+	@return join($_valueList, $list);
+}
+
+
+// ------------------------------
+// [name] hq-list-remove v1.0.0
+// [path] /hisho-query/hq-map/_remove.scss
+// [desc] 指定の値を削除
+// [return] list
+// [exsample]
+//   hq-list-remove($list);
+// ------------------------------
+@function hq-list-remove($list, $value){
+	$_index: index($list, $value);
+	$_result1: hq-list-slice($list, 1, $_index - 1);
+	$_result2: hq-list-slice($list, $_index + 1, length($list));
+	@return join($_result1, $_result2);
+}
+
+
+// ------------------------------
+// [name] hq-list-reverse v1.0.0
+// [path] /hisho-query/hq-map/_reverse.scss
+// [desc] listの先頭を削除します
+// [return] list
+// [exsample]
+//   hq-list-reverse($list);
+// ------------------------------
+@function hq-list-reverse($list){
+	$_result: ();
+	$_len: length($list);
+	@for $i from 0 through $_len - 1{
+		$_num : $_len - $i;
+		$_result: append($_result, nth($list, $_num));
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-list-slice v1.0.0
+// [path] /hisho-query/hq-map/_slice.scss
+// [desc] listの先頭を削除します
+// [return] list
+// [exsample]
+//   hq-list-slice($list,3,5);
+// ------------------------------
+@function hq-list-slice($list,$start,$end:null){
+	$_result: ();
+	@if $end == null{
+		$end: length($list);
+	}
+	@for $i from $start through $end{
+		$_result: append($_result, nth($list, $i));
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-list-toSpace v1.0.0
+// [path] /hisho-query/hq-map/_toComma.scss
+// [desc] listのseparatorをCommaに変換
+// [return] list
+// [exsample]
+//   hq-list-toComma($list);
+// ------------------------------
+@function hq-list-toComma($list){
+	@return join((),$list,comma);
+}
+
+
+// ------------------------------
+// [name] hq-list-toSpace v1.0.0
+// [path] /hisho-query/hq-map/_toSpace.scss
+// [desc] listのseparatorをSpaceに変換
+// [return] list
+// [exsample]
+//   hq-list-toSpace($list);
+// ------------------------------
+@function hq-list-toSpace($list){
+	@return join((),$list,space);
+}
+
+
+// ------------------------------
+// [name] hq-list-shift v1.0.0
+// [path] /hisho-query/hq-map/_shift.scss
+// [desc] listの先頭を削除します
+// [return] list
+// [exsample]
+//   hq-list-shift($list);
+// ------------------------------
+@function hq-list-shift($list){
+	$_result: ();
+	@for $i from 2 through length($list){
+		$_result: append($_result, nth($list, $i));
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-map-help v1.0.0
+// [path] /hisho-query/hq-map/_help.scss
+// [desc] hq("is.xxx")のhelpをターミナルに表示
+// [exsample]
+//   hq-map-help()
+// ------------------------------
+@function hq-map-help(){
+
+$_help: '
+- map method -
+-------------------------------------------------------
+| method        | return | mq| deep| description
+-------------------------------------------------------
+| map.get       | other  | o |  o  | 指定したkeyの値を取得。
+| map.set       | map    | o |  o  | 指定したkeyに値を設定。
+| map.extend    | map    | x |  o  | 複数のmapをマージ。
+| map.merge     | map    | o |  x  | mapをマージ。
+| map.mergeDeep | map    | o |  o  | mapをマージ。deepMap対応。
+| map.keys      | list   | o |  x  | keyの一覧を取得
+| map.values    | list   | o |  x  | valueの一覧を取得
+| map.hasKey    | bool   | o |  x  | keyを検索
+| map.nth       | list   | o |  x  | 指定位置のvalue&keyを返す
+| map.length    | number | o |  x  | mapの数を返す
+| map.append    | map    | o |  x  | mapの最後尾にkeyと値を追加
+| map.join      | map    | o |  x  | sass joinと同様
+| map.zip       | map    | x |  x  | sass zipと同様
+| map.toString  | map    | o |  o  | mapをハッシュ化しstringに変換。デバッグ用
+-------------------------------------------------------
+* deep: "deep map"の対応可否。非対応のものは1階層目のみ判断し処理が行われる。
+* mq: "map query"対応可否
+
+$h: hq("map.get", $mapd, "cat.colorType");
+$h: hq("map.set", $mapd, "cat.colorType", "blue");
+$h: hq("map.extend", $mapd, $mapd2);
+$h: hq("map.extend", $mapd, $mapd2, true); //deepCopy
+$h: hq("map.merge", $mapd, $mapd2);
+$h: hq("map.mergeDeep", $mapd, $mapd2);
+$h: hq("map.keys", $map);
+$h: hq("map.values", $map);
+$h: hq("map.hasKey", $map, "hoge");
+$h: hq("map.nth", $map, 2);
+$h: hq("map.length", $mapd);
+$h: hq("map.push", $mapd, foo hoge);
+$h: hq("map.join", $map, $map2, comma);
+$h: hq("map.zip", $map, $map2);
+$h: hq("map.toString", $mapd);
+
+-------------------------------------------------------
+';
+	
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-map-get-deep v1.0.0
+// [path] /hisho-query/hq-map/_get-deep.scss
+// [desc] 深い階層にある値を取得
+// [return] map
+// [exsample]
+//   hq-map-get-deep($map, color.test.A);
+// ------------------------------
+@function hq-map-get-deep($map, $key){
+	$keyList: hq-str-split($key, ".");
+	$_result: $map;
+	@each $v in $keyList{
+		@if hq-is-map($_result){
+			$_result: map-get($_result, $v);
+		}
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-map-set v1.0.0
+// [path] /hisho-query/hq-map/_set.scss
+// [desc] mapに値を設定し、mapをreturn
+// [return] map
+// [exsample]
+//   map-set($map, color, #000);
+// ------------------------------
+@function hq-map-set($map, $key, $value){
+	$_rValue: ( #{$key} : $value );
+	$_result: map-merge($map, $_rValue);
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-map-set-deep v1.0.0
+// [path] /hisho-query/hq-map/_set-deep.scss
+// [desc] 深い階層にある値を変更し、mapをreturn
+// [return] map
+// [exsample]
+//   hq-map-set-deep($map, "color.test.A", #000);
+// ------------------------------
+@function hq-map-set-deep($map, $key, $value){
+	$_keyList: hq-str-split($key, ".");
+	$_length: length($_keyList);
+	$_result: null;
+
+	//single mapSet
+	@if $_length == 1{
+		$_result: hq-map-set($map, nth($_keyList, 1), $value);
+
+	//deep mapSet
+	}@else{
+		$_sMap: null;
+		@for $i from 0 through $_length - 1 {
+			$_num: $_length - $i;
+			$_key: nth($_keyList, $_num);
+			@if $_sMap == null {
+				$_sMap: ( #{$_key} : $value );
+			}@else{
+				$_sMap: ( #{$_key} : $_sMap );
+			}
+		}
+		$_result: hq-map-merge-deep($map, $_sMap);
+	}
+
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-map-merge-deep v1.0.0
+// [path] /hisho-query/hq-map/_hq-map-merge-deep.scss
+// [desc] mapのdeep_margeを行う
+// [return] map
+// [exsample]
+//   hq-map-merge-deep($map1, $map2);
+// ------------------------------
+@function hq-map-merge-deep($self:null, $target:null){
+	$_result: $self;
+	
+	@if type-of($target) == map{
+		@each $k, $v in $target{
+			//初期化
+			@if type-of($_result) != map{
+				$_result: ();
+			}
+			
+			//map形式の場合再loop
+			@if type-of($v) == map{
+				$_rSelf: if(map-get($_result, $k), map-get($_result, $k), () );
+				$_rValue: hq-map-merge-deep( $_rSelf, $v );
+				//$_result: map-merge($_result, $_rValue);
+				$_result: hq-map-set($_result, $k, $_rValue);
+			//値の場合上書き
+			}@else{
+				$_result: hq-map-set($_result, $k, $v);
+			}
+		}
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-map-extend v1.0.0
+// [path] /hisho-query/hq-map/_hq-map-extend.scss
+// [desc] mapのextend処理 (引数可変長で対応可能)
+// [exsample]
+//   hq-map-extend($map1, $map2);
+//   hq-map-extend(true, $map1, $map2, $map3); //deep_marge
+// ------------------------------
+@function hq-map-extend( $argument... ){
+	$_result: null;
+	$_length: length($argument);
+	$_isDeep: false;
+
+	//deep setting check
+	@each $v in $argument{
+		@if hq-is-bool($v) {
+			$_isDeep: $v;
+		}
+	}
+
+	//merge
+	@for $i from 0 through $_length - 1 {
+		$_num: $_length - $i;
+		$_value: nth($argument, $_num);
+		@if type-of($_value) == map{
+			@if $_result{
+				//deepFlag
+				@if $_isDeep{
+					$_result : hq-map-merge-deep($_value, $_result);
+				}@else{
+					$_result : map-merge($_value, $_result);
+				}
+			}@else{
+				$_result: $_value;
+			}
+		}
+	}
+	@return $_result;
+}
+
+
+// ------------------------------
+// [name] hq-css-help v1.0.0
+// [path] /hisho-query/hq-css/_help.scss
+// [desc] hq("css.xxx")のhelpをターミナルに表示
+// [exsample]
+//   hq-css-help()
+// ------------------------------
+@function hq-css-help(){
+
+$_help: '
+- css method -
+-------------------------------------------------------
+| method        | return | mq| description
+-------------------------------------------------------
+| css.toMap     |  list  | o | shortHand形式で記載したCSSをMapに変換
+| css.toShort   |  map   | o | Map形式で記載したCSSをshortHandに変換
+| css.getWidth  | number | o | widthの指定値を算出
+| css.getHeight | number | o | heightの指定値を算出
+-------------------------------------------------------
+* mq: "map query"対応可否
+
+$h: hq( "css.toMap", "margin", 0 2px 3px 4px );
+$h: hq( "css.toMap", "margin", (top:0,right:5px,bottom:9px,left:5px) );
+$h: hq( "css.getWidth",  500px, solid 1px #ccc, 0 2px 3px 4px );
+$h: hq( "css.getHeight", 500px, solid 1px #ccc, 0 2px 3px 4px );
+
+-------------------------------------------------------
+';
+	
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-css-get-width v1.0.0
+// [path] /hisho-query/hq-css/_get-width.scss
+// [desc] padding&borderを元にwidthを算出
+// [exsample]
+//   hq-css-get-width($width,$border,$padding)
+// ------------------------------
+@function hq-css-get-width($width:null,$border:null,$padding:null){
+	@if $width == null{
+		@return null;
+	}
+	
+	$_result: $width;
+
+	//border
+	@if type-of($border) != map{
+		$border: hq-css-to-map($border,"border");
+	}@else if map-has-key($border,"all"){
+		$border: hq-css-to-map(map-get($_border, "all"),"border");
+	}
+
+	@if map-has-key($border,"left") or map-has-key($border,"right"){
+		
+		@if map-has-key($border,"left") and map-get($border, "left") {
+			$_borderL : hq-css-to-map(map-get($border, "left"),"border");
+			$_result: $_result - map-get($_borderL, "width");
+		}
+		@if map-has-key($border,"right") and map-get($border, "right"){
+			$_borderR : hq-css-to-map(map-get($border, "right"),"border");
+			$_result: $_result - map-get($_borderR, "width");
+		}
+
+	}@else if map-has-key($border,"width") and map-get($border, "width"){
+		$_result: $_result - ( map-get($border, "width") * 2 );
+	}
+
+	//padding
+	@if type-of($padding) != map{
+		$padding: hq-css-to-map($padding,"padding");
+	}
+
+	@if map-get($padding, "left"){
+		$_result: $_result - map-get($padding, "left");
+	}
+	@if map-get($padding, "right"){
+		$_result: $_result - map-get($padding, "right");
+	}
+
+	@return $_result;
+}
+
+
+
+// ------------------------------
+// [name] hq-css-get-height v1.0.0
+// [path] /hisho-query/hq-css/_get-height.scss
+// [desc] padding&borderを元にheightを算出
+// [exsample]
+//   hq-css-get-height($height,$border,$padding)
+// ------------------------------
+@function hq-css-get-height($height:null,$border:null,$padding:null){
+	@if $height == null{
+		@return null;
+	}
+	
+	$_result: $height;
+
+	//border
+	@if type-of($border) != map{
+		$border: hq-css-to-map($border,"border");
+	}@else if map-has-key($border,"all"){
+		$border: hq-css-to-map(map-get($_border, "all"),"border");
+	}
+
+	@if map-has-key($border,"top") or map-has-key($border,"bottom"){
+		
+		@if map-has-key($border,"top") and map-get($border, "top"){
+			$_borderT : hq-css-to-map(map-get($border, "top"),"border");
+			$_result: $_result - map-get($_borderT, "width");
+		}
+		@if map-has-key($border,"bottom") and map-get($border, "bottom"){
+			$_borderB : hq-css-to-map(map-get($border, "bottom"),"border");
+			$_result: $_result - map-get($_borderB, "width");
+		}
+
+	}@else if map-has-key($border,"width") and map-get($border, "width"){
+		$_result: $_result - ( map-get($border, "width") * 2 );
+	}
+
+	//padding
+	@if type-of($padding) != map{
+		$padding: hq-css-to-map($padding,"padding");
+	}
+
+	@if map-get($padding, "top"){
+		$_result: $_result - map-get($padding, "top");
+	}
+	@if map-get($padding, "bottom"){
+		$_result: $_result - map-get($padding, "bottom");
+	}
+
+	@return $_result;
+}
+
+
+
+// ------------------------------
+// [name] hq-css-to-map v1.0.0
+// [path] /hisho-query/hq-css/_to-map-map
+// [desc] ショートハンド指定されているリストをmapに変換
+//        対応: margin,padding,border,background,font
+// [return] map, list, null
+// [exsample]
+//   hq-css-to-map("margin", 0 10px 2px 5px)
+// ------------------------------
+
+
+// ------------------------------
+// [name] hq-css-to-map
+// ------------------------------
+@function hq-css-to-map($list, $type:null){
+	//mapの場合
+	@if type-of($list) == map{
+		@return $list;
+
+	//margin-padding
+	}@else if $type == "margin" or $type == "padding" {
+		@return hq-css-to-map-margin($list);
+
+	//border
+	}@else if $type == "border" or $type == "outline"{
+		@return hq-css-to-map-border($list);
+
+	//background
+	}@else if $type == "background"{
+		@return hq-css-to-map-background($list);
+
+	//font
+	}@else if $type == "font"{
+		@return hq-css-to-map-font($list);
+	
+	//list-style
+	}@else if $type == "list-style"{
+		@return hq-css-to-map-list-style($list);
+
+	//非対応のtypeはまま返す
+	}@else{
+		@return $list;
+	}
+}
+
+
+// ------------------------------
+// [name] hq-css-to-map-margin
+// [desc] ショートハンド指定されているmargin,paddingリストをmapに変換
+// ------------------------------
+@function hq-css-to-map-margin($list){
+	$_result: (
+		top:    null,
+		right:  null,
+		bottom: null,
+		left:   null
+	);
+	
+	//numberの場合mapに変換
+	@if type-of($list) == number {
+		$_result: hq-map-extend($_result, (
+			top:    $list,
+			right:  $list,
+			bottom: $list,
+			left:   $list
+		));
+		@return $_result;
+
+	//listの場合mapに変換
+	}@else if type-of($list) == list {
+
+		$_len:  length($list);
+
+		@if $_len == 2{
+			$_result: hq-map-extend($_result, (
+				top:    nth($list, 1),
+				right:  nth($list, 2),
+				bottom: nth($list, 1),
+				left:   nth($list, 2)
+			));
+
+		} @else if $_len == 3{
+			$_result: hq-map-extend($_result, (
+				top:    nth($list, 1),
+				right:  nth($list, 2),
+				bottom: nth($list, 3),
+				left:   nth($list, 2)
+			));
+
+		} @else if $_len == 4{
+			$_result: hq-map-extend($_result, (
+				top:    nth($list, 1),
+				right:  nth($list, 2),
+				bottom: nth($list, 3),
+				left:   nth($list, 4)
+			));
+		}
+		@return $_result;
+	
+	//以外の場合は空のresult
+	}@else{
+		@return $_result;
+	}
+}
+
+// ------------------------------
+// [name] hq-css-to-map-border
+// [desc] ショートハンド指定されているborderリストをmapに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-map-border-setter($value){
+	@if type-of($value) == color{
+		@return (color: $value);
+
+	}@else if type-of($value) == number{
+		@return (width: $value);
+	
+	}@else if type-of($value) == string and hq-str-match($value,"/thin|medium|thick/"){
+		@return (width: $value);
+
+	}@else if type-of($value) == string{
+		@return (style: $value);
+
+	}@else{
+		@return ();
+	}
+}
+@function hq-css-to-map-border($list){
+	$_result: (
+		style:    null,
+		width:  null,
+		color: null
+	);
+	//list形式
+	@if type-of($list) == list{
+		@each $_v in $list{
+			$_result: hq-map-extend($_result, hq-css-to-map-border-setter($_v));
+		}
+	//単一指定
+	}@else{
+		$_result: hq-map-extend($_result, hq-css-to-map-border-setter($list));
+	}
+	@return $_result;
+}
+
+// ------------------------------
+// [name] hq-css-to-map-background
+// [desc] ショートハンド指定されているbackgroundリストをmapに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-map-background-setter($value){
+	@if type-of($value) == color{
+		@return (color: $value);
+	
+	}@else if type-of($value) == string and hq-str-match($value,"/url\(.*\)/"){
+		@return (image: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"repeat"){
+		@return (repeat: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"/fixed|scroll/"){
+		@return (attachment: $value);
+
+	}@else{
+		@return ();
+	}
+}
+@function hq-css-to-map-background($list){
+	$_result: (
+		color: null,
+		image: null,
+		repeat: null,
+		attachment: null,
+		position: null
+	);
+	$_number1: null;
+	$_number2: null;
+	//list形式
+	@if type-of($list) == list{
+		@each $_v in $list{
+			@if type-of($_v) == number{
+				@if $_number1 == null{
+					$_number1: $_v;
+				}@else if $_number2 == null{
+					$_number2: $_v;
+				}
+			}@else{
+				$_result: hq-map-extend($_result, hq-css-to-map-background-setter($_v));
+			}
+		}
+		@if $_number1 and $_number2{
+			$_result: hq-map-extend($_result, (
+				position: $_number1 $_number2
+			));
+		}
+	//単一指定
+	}@else{
+		$_result: hq-map-extend($_result, hq-css-to-map-background-setter($list));
+	}
+	@return $_result;
+}
+
+// ------------------------------
+// [name] hq-css-to-map-font
+// [desc] ショートハンド指定されているfontリストをmapに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-map-font-setter($value){
+	@if type-of($value) == color{
+		@return (color: $value);
+	
+	}@else if type-of($value) == number and hq-num-match($value,"/100|200|300|400|500|600|700|800|900/"){
+		@return (weight: hq-str-toNumber($value) );
+
+	}@else if type-of($value) == number{
+		@return (size: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"/normal|bold|lighter|bolder/"){
+		@return (weight: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"/normal|italic|oblique/"){
+		@return (style: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"/normal|small-caps/"){
+		@return (variant: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"/"){
+		@return (
+			size: hq-str-toNumber(hq-str-split($value, "/", 0)),
+			line-height: hq-str-toNumber(hq-str-split($value, "/", 1)),
+		);
+
+	}@else if type-of($value) == string{
+		@return (family: $value);
+
+	}@else{
+		@return ();
+	}
+}
+@function hq-css-to-map-font($list){
+	$_result: (
+		size:    null,
+		line-height:  null,
+		style: null,
+		variant: null,
+		weight: null,
+		family: null
+	);
+	//list形式
+	@if type-of($list) == list{
+		@for $i from 1 through length($list) {
+			$_value: if( hq-is-number(nth($list, $i)) and hq-num-match(nth($list, $i) , "/") == true, hq-num-toString(nth($list, $i)), nth($list, $i));
+			$_result: hq-map-extend($_result, hq-css-to-map-font-setter($_value));
+		}
+	//単一指定
+	}@else{
+		$_result: hq-map-extend($_result, hq-css-to-map-font-setter($list));
+	}
+	@return $_result;
+}
+
+// ------------------------------
+// [name] hq-css-to-map-list-style
+// [desc] ショートハンド指定されているfontリストをmapに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-map-list-style-setter($value){
+
+	
+	@if type-of($value) == string and hq-str-match($value,"/outside|inside/"){
+		@return (position: $value);
+
+	}@else if type-of($value) == string and hq-str-match($value,"/url\(.*\)/"){
+		@return (image: $value);
+
+	}@else if type-of($value) == string{
+		@return (type: $value);
+
+	}@else{
+		@return ();
+	}
+}
+@function hq-css-to-map-list-style($list){
+	$_result: (
+		type:    null,
+		image:  null,
+		position: null
+	);
+	
+	//list形式
+	@if type-of($list) == list{
+		@each $_v in $list{
+			$_result: hq-map-extend($_result, hq-css-to-map-list-style-setter($_v));
+		}
+	//単一指定
+	}@else{
+		$_result: hq-map-extend($_result, hq-css-to-map-list-style-setter($list));
+	}
+	@return $_result;
+}
+
+
+
+// ------------------------------
+// [name] hq-css-to-short v1.0.0
+// [path] /hisho-query/hq-css/_to-short-map
+// [desc] map指定されているcssをショートハンドに変換
+//        対応: margin,padding,border,background,font
+// [return] map, list, null
+// [exsample]
+//   hq-css-to-short("margin", 0 10px 2px 5px)
+// ------------------------------
+
+
+// ------------------------------
+// [name] hq-css-to-short
+// ------------------------------
+@function hq-css-to-short($map, $type){
+	//listの場合
+	@if type-of($map) == "list"{
+		@return $map;
+
+	//margin-padding
+	}@else if $type == "margin" or $type == "padding" {
+		@return hq-css-to-short-margin($map);
+
+	//border
+	}@else if $type == "border" or $type == "outline"{
+		@return hq-css-to-short-border($map);
+
+	//background
+	}@else if $type == "background"{
+		@return hq-css-to-short-background($map);
+
+	//font
+	}@else if $type == "font"{
+		@return hq-css-to-short-font($map);
+
+	//list-style
+	}@else if $type == "list-style"{
+		@return hq-css-to-short-list-style($map);
+
+	//非対応のtypeはまま返す
+	}@else{
+		@return $map;
+	}
+}
+
+// ------------------------------
+// [name] hq-css-to-short-margin
+// [desc] map指定されているリストをshorthandに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-short-margin($map){
+	$_target: top,right,left,bottom;
+	$_isSet: true;
+	$_result: ();
+	
+	//map内容をチェック
+	@each $_v in $_target{
+		@if map-get($map,$_v) == null{
+			$_isSet: false;
+		}
+	}
+	
+	//対象
+	@if $_isSet{
+
+		$_top: map-get($map,"top");
+		$_right: map-get($map,"right");
+		$_bottom: map-get($map,"bottom");
+		$_left: map-get($map,"left");
+
+		$_isAll: if( $_left == $_right and $_top == $_bottom and $_top == $_right, true, false );
+		$_isX: if( $_left == $_right, true, false );
+		$_isY: if( $_top == $_bottom, true, false );
+		$_type: null;
+
+		//値が全て一致
+		@if $_isAll == true{
+			@return $_top;
+		//値が不一致
+		}@else if $_isX == false and $_isY == false{
+			$_result: append($_result, $_top);
+			$_result: append($_result, $_right);
+			$_result: append($_result, $_bottom);
+			$_result: append($_result, $_left);
+			$_result: join((), $_result, space);
+			@return $_result;
+		//横のみ一致
+		}@else if $_isX == true and $_isY == false{
+			$_result: append($_result, $_top);
+			$_result: append($_result, $_right);
+			$_result: append($_result, $_bottom);
+			$_result: join((), $_result, space);
+			@return $_result;
+		//縦のみ一致
+		}@else if $_isX == false and $_isY == true{
+			$_result: append($_result, $_top);
+			$_result: append($_result, $_right);
+			$_result: append($_result, $_bottom);
+			$_result: append($_result, $_left);
+			$_result: join((), $_result, space);
+			@return $_result;
+		//縦一致＆横一致
+		}@else if $_isX == true and $_isY == true{
+			$_result: append($_result, $_top);
+			$_result: append($_result, $_right);
+			$_result: join((), $_result, space);
+			@return $_result;
+		}
+	
+	//非対象
+	}@else{
+		@return null;
+	}
+}
+
+// ------------------------------
+// [name] hq-css-to-short-border
+// [desc] map指定されているリストをshorthandに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-short-border($map){
+	$_target: style,width,color;
+	$_isSet: true;
+	$_result: ();
+	
+	//対象以外の値があるかチェック
+	@each $_k, $_v in $map{
+		@if index($_target,$_k) == false{
+			$_isSet: false;
+		}
+	}
+	//対象
+	@if $_isSet {
+		@each $_v in $_target{
+			@if map-get($map,$_v) {
+				$_result: append($_result, map-get($map,$_v));
+			}
+		}
+		$_result: join((), $_result, space);
+		@return $_result;
+	//非対象
+	}@else{
+		@return null;
+	}
+}
+
+// ------------------------------
+// [name] hq-css-to-short-background
+// [desc] map指定されているリストをshorthandに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-short-background($map){
+	$_target: image,repeat,position,attachment,color;
+	$_isSet: true;
+	$_result: ();
+	
+	//対象以外の値があるかチェック
+	@each $_k, $_v in $map{
+		@if index($_target,$_k) == false{
+			$_isSet: false;
+		}
+	}
+	//対象
+	@if $_isSet {
+		@each $_v in $_target{
+			@if map-get($map,$_v) {
+				$_result: append($_result, map-get($map,$_v));
+			}
+		}
+		$_result: join((), $_result, space);
+		@return $_result;
+	//非対象
+	}@else{
+		@return null;
+	}
+}
+
+// ------------------------------
+// [name] hq-css-to-short-font
+// [desc] map指定されているリストをshorthandに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-short-font($map){
+	$_target: style,variant,weight,size,line-height,family;
+	$_isSet: true;
+	$_result: ();
+	
+	//対象以外の値があるかチェック
+	@each $_k, $_v in $map{
+		@if index($_target,$_k) == false{
+			$_isSet: false;
+		}
+	}
+	//対象
+	@if $_isSet {
+		$_style: map-get($map,"style");
+		$_variant: map-get($map,"variant");
+		$_weight: map-get($map,"weight");
+		$_size: map-get($map,"size");
+		$_line: map-get($map,"line-height");
+		$_family: map-get($map,"family");
+
+		@if $_style{
+			$_result: append($_result, $_style);
+		}
+		@if $_variant{
+			$_result: append($_result, $_variant);
+		}
+		@if$_weight{
+			$_result: append($_result, $_weight);
+		}
+
+		@if $_size and $_line{
+			$_result: append($_result, hq("str.unquote", $_size + "/" + $_line) );
+		}@else if $_size and $_line == null{
+			$_result: append($_result, $_size);
+		}
+
+		@if $_family{
+			$_result: append($_result, $_family);
+		}
+		
+		$_result: join((), $_result, space);
+		@return $_result;
+	//非対象
+	}@else{
+		@return null;
+	}
+}
+
+// ------------------------------
+// [name] hq-css-to-short-list-style
+// [desc] ショートハンド指定されているリストをmapに変換
+// [return] map
+// ------------------------------
+@function hq-css-to-short-list-style($map){
+	$_target: image,type,position;
+	$_isSet: true;
+	$_result: ();
+	
+	//対象以外の値があるかチェック
+	@each $_k, $_v in $map{
+		@if index($_target,$_k) == false{
+			$_isSet: false;
+		}
+	}
+	//対象
+	@if $_isSet {
+		@each $_v in $_target{
+			@if map-get($map,$_v) {
+				$_result: append($_result, map-get($map,$_v));
+			}
+		}
+		$_result: join((), $_result, space);
+		@return $_result;
+	//非対象
+	}@else{
+		@return null;
+	}
+}
+
+
+
+// ------------------------------
+// [name] hq-is-help v1.0.0
+// [path] /hisho-query/hq-is/_help.scss
+// [desc] hq("is.xxx")のhelpをターミナルに表示
+// [exsample]
+//   hq-is-help()
+// ------------------------------
+@function hq-is-help(){
+
+$_help: '
+- is method -
+-------------------------------------------------------
+| method        | return | mq| description
+-------------------------------------------------------
+| is.help       |  null  | x | is Method List 表示
+| is.gValue     |  bool  | x | グローバル変数存在チェック
+| is.function   |  bool  | x | function存在チェック
+| is.mixin      |  bool  | x | mixin存在チェック
+| is.string     |  bool  | x | string型かチェック
+| is.number     |  bool  | x | number型かチェック
+| is.color      |  bool  | x | color型かチェック
+| is.list       |  bool  | x | list型かチェック
+| is.map        |  bool  | x | map型かチェック
+| is.bool       |  bool  | x | bool型かチェック
+-------------------------------------------------------
+* mq: "map query"対応可否
+
+$gvalue: hoge
+$h: hq( "is.gValue", gvalue );    -> true
+$h: hq( "is.function", hq );      -> true
+$h: hq( "is.mixin", hqm );        -> true
+$h: hq( "is.string", "border" );  -> true
+$h: hq( "is.number", 5px );       -> true
+$h: hq( "is.color", #ff0000 );    -> true
+$h: hq( "is.map", (test:hoge) );  -> true
+$h: hq( "is.list", 0 2 3 5 );     -> true
+$h: hq( "is.bool", true );        -> true
+
+-------------------------------------------------------
+';
+	
+	$a: hq-puts($_help);
+	@return null;
+}
+
+
+
+// ------------------------------
+// [name] hq-is-string v1.0.0
+// [path] /hisho-query/hq-is/_string.scss
+// [desc] string判定
+// [return] bool
+// [exsample]
+//   hq-is-string("aaaa");
+// ------------------------------
+@function hq-is-string($str){
+	@return if(type-of($str) == string, true, false);
+}
+
+
+// ------------------------------
+// [name] hq-is-number v1.0.0
+// [path] /hisho-query/hq-is/_number.scss
+// [desc] number判定
+// [return] bool
+// [exsample]
+//   hq-is-number("aaaa");
+// ------------------------------
+@function hq-is-number($str){
+	@return if(type-of($str) == number, true, false);
+}
+
+
+// ------------------------------
+// [name] hq-is-color v1.0.0
+// [path] /hisho-query/hq-is/_color.scss
+// [desc] color判定
+// [return] bool
+// [exsample]
+//   hq-is-color("aaaa");
+// ------------------------------
+@function hq-is-color($str){
+	@return if(type-of($str) == color, true, false);
+}
+
+
+// ------------------------------
+// [name] hq-is-map v1.0.0
+// [path] /hisho-query/hq-is/_map.scss
+// [desc] map判定
+// [return] bool
+// [exsample]
+//   hq-is-map("aaaa");
+// ------------------------------
+@function hq-is-map($str){
+	@return if(type-of($str) == map, true, false);
+}
+
+
+// ------------------------------
+// [name] hq-is-list v1.0.0
+// [path] /hisho-query/hq-is/_list.scss
+// [desc] list判定
+// [return] bool
+// [exsample]
+//   hq-is-list("aaaa");
+// ------------------------------
+@function hq-is-list($str){
+	@return if(type-of($str) == list, true, false);
+}
+
+
+// ------------------------------
+// [name] hq-is-bool v1.0.0
+// [path] /hisho-query/hq-is/_bool.scss
+// [desc] bool判定
+// [return] bool
+// [exsample]
+//   hq-is-bool("aaaa");
+// ------------------------------
+@function hq-is-bool($str){
+	@return if(type-of($str) == bool, true, false);
+}
+
+
+// ==============================
+// [name] hq-core v0.1.1
+// [path] /hisho-query/_hq-core.scss
+// [desc] hq function Interface
+// ==============================
+
+$hqFunctionSetting: (
+	str: (
+		help      : 0 hq-str-help,
+		quote     : 1 quote,
+		unquote   : 1 unquote,
+		length    : 1 str-length,
+		insert    : 3 str-insert,
+		index     : 2 str-index,
+		slice     : 3 str-slice,
+		upcase    : 1 to-upper-case,
+		downcase  : 1 to-lower-case,
+		capitalize: 1 hq-str-capitalize,
+		flUpcase  : 1 hq-str-first-letter-upper-case,
+		flDowncase: 1 hq-str-first-letter-lower-case,
+		strip     : 1 hq-str-strip,
+		succ      : 1 hq-str-succ,
+		match     : 2 hq-str-match,
+		replace   : 3 hq-str-replace,
+		split     : 2 hq-str-split, 
+		getId     : 0 unique-id,
+		reverse   : 1 hq-str-reverse,
+		toNumber  : 1 hq-str-toNumber,
+	),
+	num: (
+		help       : 0 hq-num-help,
+		percentage : 1 percentage,
+		per        : 1 percentage,
+		round      : 1 round,
+		ceil       : 1 ceil,
+		floor      : 1 floor,
+		abs        : 1 abs,
+		min        : i min,
+		max        : i max,
+		unit       : 1 unit,
+		unitless   : 1 unitless,
+		comparable : 2 comparable,
+		toString   : 1 hq-num-toString,
+		match      : 2 hq-num-match,
+		replace    : 3 hq-num-replace,
+	),
+	list: (
+		help     : 0 hq-list-help,
+		nth      : 2 nth,
+		get      : 2 nth,
+		setNth   : 3 set-nth,
+		set      : 3 set-nth,
+		length   : 1 length,
+		index    : 2 index,
+		prepend  : 2 hq-list-prepend,
+		unshift  : 2 hq-list-prepend,
+		append   : 2 append,
+		push     : 2 append,
+		shift    : 1 hq-list-shift,
+		pop      : 1 hq-list-pop,
+		slice    : 3 hq-list-slice,
+		remove   : 2 hq-list-remove,
+		join     : 3 join,
+		zip      : i zip,
+		toSpace  : 1 hq-list-toSpace,
+		toComma  : 1 hq-list-toComma,
+		separator: 1 list-separator,
+		reverse  : 1 hq-list-reverse,
+	),
+	map: (
+		help      : 0 hq-map-help,
+		get       : 2 hq-map-get-deep,
+		set       : 3 hq-map-set-deep,
+		extend    : i hq-map-extend,
+		merge     : 2 map-merge,
+		mergeDeep : 2 hq-map-merge-deep,
+		keys      : 1 map-keys,
+		values    : 1 map-values,
+		hasKey    : 2 map-has-key,
+		nth       : 2 nth,
+		length    : 1 length,
+		append    : 2 append,
+		push      : 2 append,
+		join      : 3 join,
+		zip       : 1 zip,
+		toString  : 1 hq-map-to-string,
+	),
+	is: (
+		help       : 0 hq-is-help,
+		globalValue: 1 global-variable-exists,
+		gValue     : 1 global-variable-exists,
+		function   : 1 function-exists,
+		mixin      : 1 mixin-exists,
+		string     : 1 hq-is-string,
+		number     : 1 hq-is-number,
+		color      : 1 hq-is-color,
+		map        : 1 hq-is-map,
+		list       : 1 hq-is-list,
+		bool       : 1 hq-is-bool,
+	),
+	css: (
+		help      : 0 hq-css-help,
+		toMap     : 2 hq-css-to-map,
+		toShort   : 2 hq-css-to-short,
+		getWidth  : 3 hq-css-get-width,
+		getHeight : 3 hq-css-get-height,
+	),
+	help : 0 hq-help,
+);
+
+
+// ------------------------------
+// hq interface
+// ------------------------------
+@function hq($argument...){
+	//argument check
+	$_data1: nth($argument,1);
+	$_data2: if( length($argument) < 2, null, nth($argument,2) );
+	$_data3: hq-list-slice($argument,3);
+	$_isMMap: length($argument) == 2 and hq-is-map($_data2) and hq-str-match(nth(nth($_data2, 1), 1), "\.");
+	$_api: null;
+	
+	//method map
+	@if $_isMMap {
+		$_api: hq-core-method-api($_data1, $_data2);
+
+	//method query
+	}@else{
+		//method map変換api
+		$_toMapApi: hq-core-query-to-map-api($_data1, $_data2, $_data3...);
+		$_methodMap: map-get($_toMapApi, "result");
+		//実行
+		$_api: hq-core-method-api($_data2, $_methodMap);
+	}
+
+	//error
+	@if map-get($_api, "error") {
+		@warn map-get-deep($_api, "error.msg");
+		@return null;
+	//success
+	}@else{
+		@return map-get($_api, "result");
+	}
+}
+
+
+// ------------------------------
+// method query to method map
+// ------------------------------
+@function hq-core-query-to-map-api($query, $input, $options...){
+	$_apiResponse:(
+		error: null,
+		result: null,
+		request: (
+			input: $input,
+			query: $query,
+			options: $options,
+		),
+	);
+	$_isError: false;
+	$_result: $input;
+
+
+	$_methodList: hq-str-split($query,"->");
+	$_startNum: 1;
+	$_result: ();
+
+	@each $_name in $_methodList{
+		//error なし
+		@if $_isError == false {
+
+			$_name: quote(hq-str-strip($_name));
+			$_data: hq-map-get-deep($hqFunctionSetting, $_name);
+			
+			//methodが存在
+			@if $_data{
+				$_method: nth($_data,2);
+				$_argNum: nth($_data,1);
+				$_map:();
+
+				//可変長引数
+				@if $_argNum == i{
+					$_map: ( $_name: hq-list-toSpace($options) );
+
+				//引数不要
+				}@else if $_argNum == 0{
+					$_map: ( $_name: "not" );
+
+				//引数1
+				}@else if $_argNum == 1{
+					$_map: ( $_name: null );
+
+				//引数複数
+				}@else{
+					$_endNum: $_startNum + ($_argNum - 1) - 1;
+
+					//slice系method 引数チェック
+					@if hq-str-match($_name, "slice") {
+						@if length($options) < 2 or hq-is-number(nth($options,2)) == false{
+							$_endNum: $_endNum - 1;
+						}
+
+					//join系method
+					}@else if hq-str-match($_name, "join") {
+						@if length($options) < 2 or hq-str-match(nth($options,2), "/(comma|space)/") == false{
+							$_endNum: $_endNum - 1;
+						}
+					}
+					
+					//引数が存在する場合
+					@if length($options) >= $_endNum {
+						$_setOption: hq-list-slice($options, $_startNum, $_endNum);
+						$_map: ( $_name: $_setOption );
+						$_startNum: $_endNum + 1;
+					//引数が足りない場合
+					}@else{
+						@warn "not argument is hq('#{$_name}')";
+						$_map:();
+					}
+				}
+				$_result: hq-map-extend($_result, $_map);
+			
+			//methodが存在しない
+			}@else{
+				$_apiResponse: hq-map-extend($_apiResponse, (
+					msg: "hisho-query undefined method '#{$_name}'",
+				));
+				$_isError: true;
+			}
+		}
+	}
+	
+	//successの場合、resultセット
+	@if $_isError == false{
+		$_apiResponse: hq-map-set($_apiResponse, "result", $_result);
+	}
+	@return $_apiResponse;
+}
+
+
+// ------------------------------
+// method call api
+// ------------------------------
+@function hq-core-method-api($input, $map){
+	$_apiResponse:(
+		error: null,
+		result: null,
+		request: (
+			input: $input,
+			methodMap: $map,
+		),
+	);
+	$_isError: false;
+	$_result: $input;
+
+	//method map each
+	@each $_name, $_options in $map{
+
+		//error なし
+		@if $_isError == false {
+			$_method: nth(hq-map-get-deep($hqFunctionSetting, $_name), 2);
+			
+			//method name が存在しない
+			@if $_method == null or function-exists($_method) == false{
+				$_apiResponse: hq-map-extend($_apiResponse, (
+					msg: "hisho-query undefined method '#{$_name}'",
+				));
+				$_isError: true;
+			
+			//error input type check
+			}@else if hq-core-error-type($_name, $_result) {
+				$_inputType: type-of($_result);
+				$_apiResponse: hq-map-extend($_apiResponse, (
+					msg: "'#{$_name}' does not support '#{$_inputType}'",
+				));
+				$_isError: true;
+
+			//error check通過
+			}@else{
+				@if $_options == "not"{
+					$_result: call($_method);
+
+				}@else if $_options == null{
+					$_result: call($_method, $_result);
+
+				}@else{
+					$_options: hq-list-toComma($_options);
+					$_result: call($_method, $_result, $_options...);
+				}
+			}
+		}
+	}
+	
+	//successの場合、resultセット
+	@if $_isError == false{
+		$_apiResponse: hq-map-set($_apiResponse, "result", $_result);
+	}
+	@return $_apiResponse;
+}
+
+
+// ------------------------------
+// [name] hq-error-type v1.0.0
+// [path] /hisho-query/hq-error/_type.scss
+// [desc] type用error message
+// ------------------------------
+@function hq-core-error-type($name, $input){
+	$_type: nth( hq-str-split($name,".") ,1 );
+	$_value: type-of($input);
+
+	@if hq-str-match($name,"/(help|getId)/") {
+		@return false;
+	}
+	
+	@if $_type == "str"{
+		$_type: "string";
+	}@else if $_type == "num"{
+		$_type: "number";
+	}
+
+	//error判定
+	@if $_value != $_type and $_type != "css" and $_type != "is"{
+		@return true;
+	}@else{
+		@return false;
+	}
+}
