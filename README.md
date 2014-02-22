@@ -1,8 +1,8 @@
 hisho-query
 ===========
-Sass3.3 and compass1.0 Library  
+Sass 3.3 Function Library  
 
-sass3.3(RC)とcompassで動作する、sass function Library  
+sass3.3(RC)で動作する、sass function Library  
 
 バージョン
 ------
@@ -11,26 +11,30 @@ sass3.3(RC)とcompassで動作する、sass function Library
 開発環境
 ------
 Sass 3.3.0.rc.2  
-compass 1.0.0.alpha.17  
 
 
 利用方法
 ------
 
-[1]sassフォルダ内に"hisho-query"フォルダを作成  
+[1]sassフォルダ内でcloneを行う。  
 
-[2]上記にファイルを配置  
+	$ git clone git@github.com:syouyou/hisho-query.git
 
-	/sass/hisho-query/_hquery-0.1.scss
-	/sass/hisho-query/_hquery-function-0.1.rb
 
-[3]compassの"config.rb"内に追記  
+[2]compassの"config.rb"内に追記。  
 
 	require "./sass/hisho-query/_hquery-function-0.1.rb"
 
-[4]sass内でinclude  
+※compassを使わない場合は、watch時に-rオプションを指定して実行。  
+	
+	$ sass --watch ./sass:./css -t compact -r ./sass/hisho-query/_hquery-function-0.1.rb 
+
+
+[3]sass内でinclude  
 
 	@import "hisho-query/_hquery-0.1";
+
+
 
 
 hq functionの使い方
