@@ -1,13 +1,13 @@
 @charset "utf-8";
-/*! hisho-query v0.1.1 */
-// Sass3 and compass1 Library
+/*! hisho-query v0.1.2 */
+// Sass3.3 Function Library
 // http://query.hisho.com
 // 
 // Copyright 2014 shoyo kyo
 // Released under the MIT license
 // https://github.com/syouyou/hisho-query/blob/master/LICENSE
 // 
-// Date: 2014-02-16
+// Date: 2014-04-30
 
 
 // ------------------------------
@@ -942,6 +942,7 @@ $h: hq( "css.getHeight", 500px, solid 1px #ccc, 0 2px 3px 4px );
 
 	}@else if type-of($value) == string and hq-str-match($value,"/"){
 		@return (
+
 			size: hq-str-toNumber(hq-str-split($value, "/", 0)),
 			line-height: hq-str-toNumber(hq-str-split($value, "/", 1)),
 		);
@@ -964,6 +965,11 @@ $h: hq( "css.getHeight", 500px, solid 1px #ccc, 0 2px 3px 4px );
 	);
 	//list形式
 	@if type-of($list) == list{
+		//listのitemをString形式に変更
+		$list: join((), $list, comma);
+		$list: hq-list-toString($list);
+		$list: hq-str-split($list, ",");
+
 		@for $i from 1 through length($list) {
 			$_value: if( hq-is-number(nth($list, $i)) and hq-num-match(nth($list, $i) , "/") == true, hq-num-toString(nth($list, $i)), nth($list, $i));
 			$_result: hq-map-extend($_result, hq-css-to-map-font-setter($_value));
@@ -1473,6 +1479,7 @@ $hqFunctionSetting: (
 		toComma  : 1 hq-list-toComma,
 		separator: 1 list-separator,
 		reverse  : 1 hq-list-reverse,
+		toString : 1 hq-list-toString,
 	),
 	map: (
 		help      : 0 hq-map-help,
@@ -1523,7 +1530,7 @@ $hqFunctionSetting: (
 	//argument check
 	$_data1: nth($argument,1);
 	$_data2: if( length($argument) < 2, null, nth($argument,2) );
-	$_data3: hq-list-slice($argument,3);
+	$_data3: if( length($argument) < 3, null, hq-list-slice($argument,3) );
 	$_isMMap: length($argument) == 2 and hq-is-map($_data2) and hq-str-match(nth(nth($_data2, 1), 1), "\.");
 	$_api: null;
 	

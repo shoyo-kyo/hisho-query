@@ -1,14 +1,38 @@
 require "sass"
 #
-# hisho-query support functions v0.1.1
+# hisho-query support functions v0.1.2
 # http://query.hisho.com
 # 
 # Copyright 2014 shoyo kyo
 # Released under the MIT license
 # https://github.com/syouyou/hisho-query/blob/master/LICENSE
 # 
-# Date: 2014-02-16
+# Date: 2014-04-30
 # 
+
+#
+# hq-list functions
+# list操作関数を集めたrubyファイル
+#
+module HishoQueryList
+  #
+  # hq-list-to-string($map)
+  # return string
+  #
+
+  #
+  # [name] hq-list-toString v1.0.0
+  # [desc] listを文字列に変換。debugで等で利用
+  # [return] string
+  # [exsample] hq-list-toString($map)
+  #
+  def hq_list_toString(list)
+    result = list.to_s
+    Sass::Script::String.new(result)
+  end
+end
+
+
 
 #
 # hq-map functions
@@ -330,4 +354,5 @@ module Sass::Script::Functions
   include HishoQueryStr
   include HishoQueryMap
   include HishoQueryNum
+  include HishoQueryList
 end
